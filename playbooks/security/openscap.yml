@@ -1,7 +1,6 @@
 ---
 - name: build openscap report for rhel7
   hosts: web
-  become: true
   gather_facts: false
 
   vars:
@@ -10,19 +9,27 @@
 
   tasks:
     - name: make sure openscap-scanner and scap-security guide are installed
+      become: true
       yum:
         name:
           - openscap-scanner
           - scap-security-guide
           - httpd
         state: present
+        
+    - name: ensure httpd started
+      become: true
+      service:
+        name: httpd
+        state: started
+        enabled: true
 
     - name: Check if  SCAP Security Guide (SSG) profile is available
       stat:
         path: "{{ssg_schema}}"
 
     - name: create HTML report
-      command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_standard --results report.xml --report index.html {{ssg_schema}}"
+      command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_pci-dss --results report.xml --report index.html {{ssg_schema}}"
       register: command_result
       failed_when: "'Error' in command_result.stderr"
 
@@ -47,8 +54,3 @@
       debug:
         msg: "Please go to http://{{ansible_host}}/openscap"
         
-    - name: ensure httpd started
-      service: 
-        name: httpd
-        state: started
-        enabled: true
