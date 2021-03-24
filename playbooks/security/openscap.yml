@@ -29,8 +29,7 @@
         path: "{{ssg_schema}}"
 
     - name: create HTML report
-      command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_pci-dss --report index.html {{ssg_schema}}"
-      register: command_result
+      command: "oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_pci-dss --report index.html {{ssg_schema}} >/dev/null 2>&1" 
       ignore_errors: True
 
 
@@ -47,7 +46,6 @@
         dest: "{{file_path}}/{{item}}"
         remote_src: true
       loop:
- 
         - index.html
         
 
