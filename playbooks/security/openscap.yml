@@ -14,6 +14,7 @@
         name:
           - openscap-scanner
           - scap-security-guide
+          - httpd
         state: present
 
     - name: Check if  SCAP Security Guide (SSG) profile is available
@@ -39,6 +40,7 @@
         remote_src: true
       loop:
         - report.xml
+        - index.html
         
 
     - name: DISPLAY LINK TO INVENTORY REPORT
