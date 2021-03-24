@@ -1,6 +1,7 @@
 ---
 - name: build openscap report for rhel7
   hosts: web
+  become: true
   gather_facts: false
 
   vars:
