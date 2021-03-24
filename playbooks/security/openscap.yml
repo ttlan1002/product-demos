@@ -1,11 +1,11 @@
 ---
-- name: build openscap report for rhel7
+- name: build openscap report for rhel8
   hosts: web
   gather_facts: false
 
   vars:
     file_path: "/var/www/html/openscap/"
-    ssg_schema: "/usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml"
+    ssg_schema: "/usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml"
 
   tasks:
     - name: make sure openscap-scanner and scap-security guide are installed
