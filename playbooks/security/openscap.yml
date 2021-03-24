@@ -39,8 +39,14 @@
         remote_src: true
       loop:
         - report.xml
-        - index.html
+        
 
     - name: DISPLAY LINK TO INVENTORY REPORT
       debug:
         msg: "Please go to http://{{ansible_host}}/openscap"
+        
+    - name: ensure httpd started
+      service: 
+        name: httpd
+        state: started
+        enabled: true
